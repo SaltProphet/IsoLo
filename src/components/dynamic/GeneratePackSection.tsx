@@ -80,7 +80,7 @@ export function GeneratePackSection(props: GeneratePackSectionProps): React.JSX.
             </span>
             <input
               type="checkbox"
-              checked={exportOptions[key as keyof typeof exportOptions] ?? false}
+              checked={exportOptions[key as keyof typeof exportOptions]}
               onChange={(e) => {
                 handleOptionChange(key, e.target.checked);
               }}

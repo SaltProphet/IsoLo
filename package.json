@@ -1,9 +1,9 @@
 {
-  "name": "fileuploads",
+  "name": "isolo-loop-architect",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "AI-Aware React/TypeScript file upload application with Spec-Driven Development",
+  "description": "AI-Aware React/TypeScript audio processing application with SAM Audio integration",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

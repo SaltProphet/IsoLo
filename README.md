@@ -1,47 +1,54 @@
-# FileUploads
+# IsoLo - Loop Architect
 
-An AI-Aware React/TypeScript application built with **Spec-Driven Development** principles.
+An AI-Aware React/TypeScript audio processing application built with **Spec-Driven Development** principles.
 
 ## Overview
 
-This project demonstrates a modern approach to AI-assisted development, where specifications drive implementation and AI agents collaborate effectively through clear contracts and documentation.
+Loop Architect is a modern audio processing tool that combines a React frontend with a Python backend to provide powerful stem separation and sound isolation capabilities. The project demonstrates AI-assisted development with clear specifications, strict type safety, and modular architecture.
 
 ### Key Features
 
-- 🤖 **AI-Aware Architecture** - Structured for optimal AI agent collaboration
-- 📋 **Spec-Driven Development** - Specifications are the source of truth
+- 🎵 **Audio Stem Separation** - Separate audio into vocals, drums, bass, guitar, piano, and other
+- 🤖 **SAM Audio Integration** - Isolate ANY sound by name using AI (e.g., "saxophone solo", "crowd applause")
+- 🎼 **Musical Analysis** - Automatic BPM and key detection with harmonic recommendations
+- ✂️ **Loop Generation** - Slice audio into loops with customizable settings
+- 🎨 **Modern UI** - React/TypeScript frontend with Tailwind CSS
 - 🔒 **Strict TypeScript** - No `any` types, full type safety
-- 🎨 **Tailwind CSS** - Utility-first styling approach
-- 🧩 **Modular Components** - Self-contained, reusable views
-- 🏗️ **Clean Architecture** - Clear separation of concerns
+- 🧩 **Modular Architecture** - Clean separation between frontend and backend
 
 ## Project Structure
 
 ```
-FileUploads/
+IsoLo/
 ├── .github/
 │   ├── instructions/          # Agent-specific instructions
 │   └── copilot-instructions.md # Strict coding standards
+├── backend/                   # Python backend
+│   ├── app.py                # Gradio application
+│   ├── sam_audio_integration.py # SAM Audio integration
+│   ├── SAM_AUDIO_INTEGRATION.md # SAM Audio documentation
+│   └── README.md             # Backend documentation
 ├── docs/
 │   ├── specs/                 # Feature specifications (SOURCE OF TRUTH)
 │   └── context/               # Project context & decisions
-├── src/
+├── src/                       # React frontend
 │   ├── components/
 │   │   └── dynamic/           # Modular, reusable components
 │   ├── App.tsx                # Root component
 │   └── main.tsx               # Application entry point
 ├── AGENTS.md                  # AI agent coordination guide
 ├── GEMINI.md                  # Vision & architectural guidelines
-└── package.json               # Dependencies & scripts
+└── package.json               # Frontend dependencies & scripts
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- **Node.js 18+** and npm (for frontend)
+- **Python 3.8+** (for backend)
 
-### Installation
+### Frontend Installation
 
 ```bash
 # Install dependencies
@@ -60,11 +67,26 @@ npm run type-check
 npm run lint
 ```
 
+### Backend Installation
+
+```bash
+# Install Python dependencies
+pip install numpy scipy soundfile librosa gradio matplotlib
+
+# Optional: Install SAM Audio for named sound isolation
+pip install sam-audio-infer
+
+# Run the Gradio backend
+python backend/app.py
+```
+
+See [backend/README.md](./backend/README.md) for detailed backend documentation.
+
 ### Development Workflow
 
 1. **Check Specifications** - Review `/docs/specs/` for feature requirements
 2. **Read Context** - Understand patterns in `/docs/context/`
-3. **Implement** - Follow strict TypeScript and Tailwind CSS standards
+3. **Implement** - Follow strict TypeScript and Tailwind CSS standards (frontend) or type hints (backend)
 4. **Test** - Verify changes work as expected
 5. **Document** - Update specs and context as needed
 
@@ -108,14 +130,25 @@ ARIA labels, semantic HTML, keyboard navigation - built-in from the start.
 
 ## Technology Stack
 
+### Frontend
 - **React 18** - UI library
 - **TypeScript 5** - Type-safe JavaScript
 - **Vite** - Build tool and dev server
 - **Tailwind CSS** - Utility-first styling
 - **ESLint** - Code linting with strict rules
 
+### Backend
+- **Python 3.8+** - Backend runtime
+- **Gradio** - Web interface for audio processing
+- **Librosa** - Audio analysis and processing
+- **NumPy/SciPy** - Numerical computing
+- **SAM Audio** (optional) - AI-powered sound isolation
+- **PyTorch** - Deep learning framework (for SAM Audio)
+
 ## Documentation
 
+- **[backend/README.md](./backend/README.md)** - Python backend documentation
+- **[backend/SAM_AUDIO_INTEGRATION.md](./backend/SAM_AUDIO_INTEGRATION.md)** - SAM Audio integration guide
 - **[AGENTS.md](./AGENTS.md)** - AI agent coordination guide
 - **[GEMINI.md](./GEMINI.md)** - Vision and architectural guidelines
 - **[.github/copilot-instructions.md](./.github/copilot-instructions.md)** - Strict coding standards

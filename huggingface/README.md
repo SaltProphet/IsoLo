@@ -104,38 +104,51 @@ Loop_Architect_Pack.zip
     └── ...
 ```
 
-## 🛠️ Installation (Local Deployment)
+## 🛠️ Installation & Setup
+
+### Quick Start
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Run the application
+python app.py
+
+# 3. Open browser to http://localhost:7860
+```
+
+### 📖 Complete Setup Guide
+
+For detailed installation instructions, troubleshooting, and deployment guides, see:
+
+**👉 [SETUP.md](./SETUP.md) - Complete Setup Instructions**
+
+The setup guide includes:
+- Step-by-step installation for all platforms
+- Prerequisites and system requirements
+- Local development setup
+- Hugging Face Spaces deployment
+- Configuration options
+- Troubleshooting common issues
+- Advanced setup (Docker, custom models, etc.)
 
 ### Prerequisites
 - Python 3.8+
 - FFmpeg (for audio file format support)
 
-### Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
 ### Optional: SAM Audio
 
-For named sound isolation capabilities:
+For AI-powered named sound isolation:
 
 ```bash
 # Lightweight version (recommended)
 pip install sam-audio-infer
 
-# OR Official version (maximum quality)
+# OR Official version (maximum quality, requires GPU)
 git clone https://github.com/facebookresearch/sam-audio.git
 cd sam-audio && pip install .
 ```
-
-### Run Locally
-
-```bash
-python app.py
-```
-
-Then open your browser to `http://localhost:7860`
 
 ## 📋 System Requirements
 
@@ -166,7 +179,12 @@ ENABLE_SAM_AUDIO=true
 
 ## 📚 Documentation
 
-Full documentation available in the [main repository](https://github.com/SaltProphet/IsoLo):
+**Setup & Installation:**
+- **[SETUP.md](./SETUP.md)** - Complete setup instructions
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Hugging Face Spaces deployment guide
+- [PACKAGE_INFO.md](./PACKAGE_INFO.md) - Package structure overview
+
+**Main Repository Documentation:**
 - [Backend Documentation](../backend/README.md)
 - [SAM Audio Integration](../backend/SAM_AUDIO_INTEGRATION.md)
 - [Project Overview](../README.md)

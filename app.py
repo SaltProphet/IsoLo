@@ -13,6 +13,9 @@ from scipy import signal
 from typing import Tuple, List, Any, Optional, Dict
 import shutil
 
+# SAM Audio integration
+from sam_audio_integration import SAMAudioSeparator, create_named_stem_separations
+
 # Use a non-interactive backend for Matplotlib
 matplotlib.use('Agg')
 
@@ -394,6 +397,100 @@ def apply_envelope(y: np.ndarray, sr: int, attack_gain_db: float, sustain_gain_d
 
 # --- CORE PROCESSING FUNCTIONS ---
 
+def separate_stems_with_sam_audio(
+    audio_file_path: str,
+    use_sam_audio: bool = False,
+    sam_prompts: Optional[List[str]] = None
+) -> Tuple[
+    Dict[str, Optional[Tuple[int, np.ndarray]]],
+    float, str, str
+]:
+    """
+    Enhanced stem separation supporting both traditional stems and SAM Audio named isolation.
+    
+    Args:
+        audio_file_path: Path to the audio file
+        use_sam_audio: Whether to use SAM Audio for named isolation
+        sam_prompts: List of text descriptions for sounds to isolate (if using SAM Audio)
+        
+    Returns:
+        Tuple of (stems_dict, detected_bpm, detected_key, harmonic_recs)
+        stems_dict maps stem/prompt name to (sample_rate, audio_data) tuples
+    """
+    if audio_file_path is None:
+        raise gr.Error("No audio file uploaded!")
+    
+    try:
+        # Load audio for analysis
+        y_orig, sr_orig = librosa.load(audio_file_path, sr=None, mono=False)
+        
+        # Ensure stereo for processing
+        if y_orig.ndim == 1:
+            y_orig = np.stack([y_orig, y_orig], axis=-1)
+        if y_orig.ndim == 2 and y_orig.shape[0] < y_orig.shape[1]:
+            y_orig = y_orig.T  # Transpose to (N, 2)
+            
+        y_mono = librosa.to_mono(y_orig)
+
+        # Detect tempo and key
+        tempo, _ = librosa.beat.beat_track(y=y_mono, sr=sr_orig)
+        detected_bpm = 120.0 if tempo is None or tempo.size == 0 or tempo[0] == 0 else float(np.round(tempo[0]))
+        detected_key = detect_key(y_mono, sr_orig)
+        harmonic_recs = get_harmonic_recommendations(detected_key)
+
+        stems_data: Dict[str, Optional[Tuple[int, np.ndarray]]] = {}
+        
+        # Convert to int16 for Gradio Audio component
+        y_int16 = (y_orig * 32767).astype(np.int16)
+
+        # Use SAM Audio if enabled and prompts provided
+        if use_sam_audio and sam_prompts:
+            print("Using SAM Audio for named sound isolation...")
+            try:
+                separator = SAMAudioSeparator()
+                if not separator.is_available():
+                    print("SAM Audio not available, falling back to traditional stems")
+                    use_sam_audio = False
+                else:
+                    # Separate each named sound
+                    results = separator.separate_multiple(audio_file_path, sam_prompts)
+                    
+                    for prompt, (sr, audio_data) in results.items():
+                        # Convert to int16 for Gradio
+                        if audio_data.dtype != np.int16:
+                            audio_int16 = (audio_data * 32767).astype(np.int16)
+                        else:
+                            audio_int16 = audio_data
+                        
+                        # Ensure stereo
+                        if audio_int16.ndim == 1:
+                            audio_int16 = np.stack([audio_int16, audio_int16], axis=-1)
+                        
+                        stems_data[prompt] = (sr, audio_int16)
+                    
+                    print(f"Successfully isolated {len(results)} named sounds using SAM Audio")
+            except Exception as e:
+                print(f"Error with SAM Audio: {e}")
+                print("Falling back to traditional stem separation")
+                use_sam_audio = False
+        
+        # Fall back to traditional stems if SAM Audio not used or failed
+        if not use_sam_audio or not sam_prompts:
+            print("Using traditional stem separation (mock)...")
+            # In a real implementation, this would use Demucs or similar
+            # For now, return the original audio for each traditional stem
+            for name in STEM_NAMES:
+                stems_data[name] = (sr_orig, y_int16.copy())
+
+        return stems_data, detected_bpm, detected_key, harmonic_recs
+        
+    except Exception as e:
+        print(f"Error processing audio: {e}")
+        import traceback
+        traceback.print_exc()
+        raise gr.Error(f"Error processing audio: {str(e)}")
+
+
 def separate_stems(audio_file_path: str) -> Tuple[
     Optional[Tuple[int, np.ndarray]], 
     Optional[Tuple[int, np.ndarray]], 
@@ -406,6 +503,9 @@ def separate_stems(audio_file_path: str) -> Tuple[
     """
     Simulates stem separation and detects BPM and Key.
     Returns Gradio Audio tuples (sr, data) for each stem.
+    
+    This is the original function maintained for backward compatibility.
+    For direct performance, it uses inline implementation rather than delegation.
     """
     if audio_file_path is None:
         raise gr.Error("No audio file uploaded!")
@@ -417,10 +517,8 @@ def separate_stems(audio_file_path: str) -> Tuple[
         # Ensure stereo for processing
         if y_orig.ndim == 1:
             y_orig = np.stack([y_orig, y_orig], axis=-1)
-        # librosa.load with mono=False may return (N,) for mono files,
-        # or (2, N). Need to ensure (N, 2) or (N,)
         if y_orig.ndim == 2 and y_orig.shape[0] < y_orig.shape[1]:
-             y_orig = y_orig.T # Transpose to (N, 2)
+            y_orig = y_orig.T  # Transpose to (N, 2)
             
         y_mono = librosa.to_mono(y_orig)
 
@@ -432,7 +530,6 @@ def separate_stems(audio_file_path: str) -> Tuple[
 
         # Create mock separated stems
         # In a real app, you'd use Demucs, Spleeter, etc.
-        # Here, we just return the original audio for each stem for demo purposes.
         stems_data: Dict[str, Optional[Tuple[int, np.ndarray]]] = {}
         
         # Convert to int16 for Gradio Audio component
@@ -755,6 +852,46 @@ def slice_all_and_zip(
         import traceback
         traceback.print_exc()
         raise gr.Error(f"Error creating ZIP: {str(e)}")
+
+
+def separate_named_sounds(
+    audio_file_path: str,
+    prompts_text: str
+) -> Tuple[Dict[str, Tuple[int, np.ndarray]], float, str, str]:
+    """
+    Separate multiple named sounds from audio using SAM Audio.
+    
+    This is a convenience function that can be called to isolate any named sounds
+    instead of using traditional stems.
+    
+    Args:
+        audio_file_path: Path to the audio file
+        prompts_text: Comma-separated list of sound descriptions
+                     Example: "lead vocals, guitar solo, bass line, drum beat"
+        
+    Returns:
+        Tuple of (isolated_sounds_dict, bpm, key, harmonic_recs)
+    """
+    if audio_file_path is None:
+        raise gr.Error("No audio file uploaded!")
+    
+    # Parse prompts from comma-separated text
+    prompts = [p.strip() for p in prompts_text.split(",") if p.strip()]
+    
+    if not prompts:
+        raise gr.Error("Please provide at least one sound description")
+    
+    print(f"Isolating {len(prompts)} named sounds: {prompts}")
+    
+    # Use the enhanced separation function
+    stems_dict, bpm, key, recs = separate_stems_with_sam_audio(
+        audio_file_path,
+        use_sam_audio=True,
+        sam_prompts=prompts
+    )
+    
+    return stems_dict, bpm, key, recs
+
 
 # --- GRADIO INTERFACE ---
 

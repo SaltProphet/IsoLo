@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-lg shadow-glass;
+  }
+  
+  .metal-panel {
+    @apply bg-gradient-to-b from-metal-light to-metal-dark border border-white/10 rounded-lg shadow-metal;
+  }
+}

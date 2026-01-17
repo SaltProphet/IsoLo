@@ -1,0 +1,19 @@
+# Core Dependencies
+numpy>=1.24.0
+scipy>=1.10.0
+soundfile>=0.12.0
+librosa>=0.10.0
+gradio>=4.0.0
+matplotlib>=3.7.0
+
+# Deep Learning (for SAM Audio - optional but recommended)
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# SAM Audio Integration (optional - for named sound isolation)
+# Uncomment one of these if you want SAM Audio capabilities:
+# sam-audio-infer  # Lightweight version (recommended for Spaces)
+# Or clone and install from: https://github.com/facebookresearch/sam-audio
+
+# Additional utilities
+Pillow>=10.0.0

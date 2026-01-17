@@ -1,0 +1,7 @@
+numpy
+scipy
+soundfile
+librosa
+gradio==4.36.1
+huggingface_hub
+matplotlib

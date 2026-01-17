@@ -28,6 +28,11 @@ IsoLo/
 │   ├── sam_audio_integration.py # SAM Audio integration
 │   ├── SAM_AUDIO_INTEGRATION.md # SAM Audio documentation
 │   └── README.md             # Backend documentation
+├── huggingface/              # Hugging Face Spaces deployment
+│   ├── app.py                # Gradio app for HF Spaces
+│   ├── requirements.txt      # Python dependencies
+│   ├── README.md             # Space card & documentation
+│   └── DEPLOYMENT.md         # Deployment guide
 ├── docs/
 │   ├── specs/                 # Feature specifications (SOURCE OF TRUTH)
 │   └── context/               # Project context & decisions
@@ -81,6 +86,30 @@ python backend/app.py
 ```
 
 See [backend/README.md](./backend/README.md) for detailed backend documentation.
+
+### Hugging Face Spaces Deployment
+
+Deploy Loop Architect to Hugging Face Spaces for public access:
+
+```bash
+# All deployment files are in the huggingface/ folder
+cd huggingface/
+
+# Validate the package
+python validate.py
+
+# See DEPLOYMENT.md for complete instructions
+# Option 1: Upload files directly to HF Spaces
+# Option 2: Clone and push via git
+```
+
+The `huggingface/` folder contains everything needed:
+- 🚀 Ready-to-deploy Gradio app
+- 📦 Complete Python dependencies
+- 📖 Comprehensive deployment guide
+- ✅ Pre-deployment validation script
+
+See [huggingface/DEPLOYMENT.md](./huggingface/DEPLOYMENT.md) for step-by-step deployment instructions.
 
 ### Development Workflow
 
@@ -149,6 +178,8 @@ ARIA labels, semantic HTML, keyboard navigation - built-in from the start.
 
 - **[backend/README.md](./backend/README.md)** - Python backend documentation
 - **[backend/SAM_AUDIO_INTEGRATION.md](./backend/SAM_AUDIO_INTEGRATION.md)** - SAM Audio integration guide
+- **[huggingface/DEPLOYMENT.md](./huggingface/DEPLOYMENT.md)** - Hugging Face Spaces deployment guide
+- **[huggingface/PACKAGE_INFO.md](./huggingface/PACKAGE_INFO.md)** - HF deployment package overview
 - **[AGENTS.md](./AGENTS.md)** - AI agent coordination guide
 - **[GEMINI.md](./GEMINI.md)** - Vision and architectural guidelines
 - **[.github/copilot-instructions.md](./.github/copilot-instructions.md)** - Strict coding standards

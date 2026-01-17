@@ -1,0 +1,42 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Gradio temporary files
+gradio_cached_examples/
+flagged/
+
+# Model files (if downloaded locally)
+models/
+*.pth
+*.pt
+*.ckpt
+
+# Audio files (temporary processing)
+temp_audio/
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Archives
+*.zip
+*.tar.gz
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

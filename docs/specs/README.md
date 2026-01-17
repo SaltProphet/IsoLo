@@ -1,10 +1,34 @@
 # FileUploads Specifications
 
-This directory contains the **source of truth** for all features in the FileUploads application.
+This directory contains the **source of truth** for all features in the Loop Architect application.
 
 ## Purpose
 
 Specifications drive all development in this repository. Every feature, component, and service must have a corresponding specification document before implementation begins.
+
+## Current Specifications
+
+### [Workflow Orchestrator Specification](./workflow-orchestrator-spec.md)
+**Status**: ✅ Implemented
+
+Complete specification for the 11-step modular workflow orchestrator that coordinates all processing from input to final pack export.
+
+**Modules Implemented:**
+1. Input Handler - Validate and prepare audio files
+2. Audio Analyzer - BPM, key, and time signature detection
+3. Instrumental Builder - Mix non-vocal stems
+4. Audio Slicer - Generate loops and one-shots with MIDI
+5. Lyric Extractor - Timestamped lyrics (Stub)
+6. Visualizer Generator - Audio visualizations (Stub)
+7. Video Composer - Video rendering (Stub)
+8. Metadata Tagger - Tag audio files with BPM/key
+9. Pack Builder - Organize files into structure
+10. Pack Exporter - Create final ZIP package
+
+**Related Documentation:**
+- [Workflow Diagram](../WORKFLOW_DIAGRAM.md)
+- [Backend README](../../backend/README.md)
+- [Main README](../../README.md)
 
 ## Specification Template
 

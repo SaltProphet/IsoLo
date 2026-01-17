@@ -12,9 +12,30 @@ Loop Architect is a modern audio processing tool that combines a React frontend 
 - 🤖 **SAM Audio Integration** - Isolate ANY sound by name using AI (e.g., "saxophone solo", "crowd applause")
 - 🎼 **Musical Analysis** - Automatic BPM and key detection with harmonic recommendations
 - ✂️ **Loop Generation** - Slice audio into loops with customizable settings
+- 📦 **Full Workflow Orchestration** - Modular 11-step workflow from input to final pack
+- 🎹 **MIDI Generation** - Automatic MIDI extraction from melodic stems
+- 🏷️ **Metadata Tagging** - Automatic BPM/key tagging for all audio files
 - 🎨 **Modern UI** - React/TypeScript frontend with Tailwind CSS
 - 🔒 **Strict TypeScript** - No `any` types, full type safety
 - 🧩 **Modular Architecture** - Clean separation between frontend and backend
+
+## Workflow Pipeline
+
+Loop Architect implements a complete 11-step modular workflow:
+
+1. **Input Handling** - Validate and prepare audio files
+2. **Stem Separation** - Traditional stems or SAM Audio named isolation
+3. **Instrumental Builder** - Mix non-vocal stems with normalization
+4. **Audio Analysis** - Detect BPM, key, and harmonic recommendations
+5. **Slicing** - Generate bar-aligned loops and one-shots with MIDI
+6. **Lyric Extraction** (Stub) - Future Whisper/STT integration
+7. **Visualizer** (Stub) - Future audio-reactive visualizations
+8. **Video Composer** (Stub) - Future video generation with ffmpeg
+9. **Metadata Tagging** - Tag audio files with BPM/key information
+10. **Pack Building** - Organize files into professional structure
+11. **Export** - ZIP package ready for download
+
+See [docs/specs/workflow-orchestrator-spec.md](./docs/specs/workflow-orchestrator-spec.md) for detailed workflow documentation.
 
 ## Project Structure
 
@@ -25,6 +46,20 @@ IsoLo/
 │   └── copilot-instructions.md # Strict coding standards
 ├── backend/                   # Python backend
 │   ├── app.py                # Gradio application
+│   ├── workflow_orchestrator.py # Workflow coordination
+│   ├── workflow_types.py     # Workflow data structures
+│   ├── workflow_demo.py      # Workflow demo script
+│   ├── modules/              # Modular workflow components
+│   │   ├── input_handler.py
+│   │   ├── audio_analyzer.py
+│   │   ├── instrumental_builder.py
+│   │   ├── slicer.py
+│   │   ├── lyric_extractor.py (stub)
+│   │   ├── visualizer.py (stub)
+│   │   ├── video_composer.py (stub)
+│   │   ├── metadata_tagger.py
+│   │   ├── pack_builder.py
+│   │   └── exporter.py
 │   ├── sam_audio_integration.py # SAM Audio integration
 │   ├── SAM_AUDIO_INTEGRATION.md # SAM Audio documentation
 │   └── README.md             # Backend documentation
@@ -35,6 +70,7 @@ IsoLo/
 │   └── DEPLOYMENT.md         # Deployment guide
 ├── docs/
 │   ├── specs/                 # Feature specifications (SOURCE OF TRUTH)
+│   │   └── workflow-orchestrator-spec.md
 │   └── context/               # Project context & decisions
 ├── src/                       # React frontend
 │   ├── components/
@@ -86,6 +122,30 @@ python backend/app.py
 ```
 
 See [backend/README.md](./backend/README.md) for detailed backend documentation.
+
+### Workflow Orchestrator Demo
+
+Run the standalone workflow demo:
+
+```bash
+# Basic demo with default settings
+python backend/workflow_demo.py path/to/audio.mp3
+
+# Custom pack name and loop type
+python backend/workflow_demo.py path/to/audio.mp3 --pack-name "My_Pack" --loop-type "4-bar"
+```
+
+The workflow demo demonstrates the complete processing pipeline:
+- ✅ Input validation
+- ✅ Audio analysis (BPM/key detection)
+- ✅ Instrumental creation
+- ✅ Loop and one-shot slicing
+- ✅ MIDI generation (stub)
+- ✅ Metadata tagging
+- ✅ Professional pack structure
+- ✅ ZIP export
+
+See [docs/specs/workflow-orchestrator-spec.md](./docs/specs/workflow-orchestrator-spec.md) for architecture details.
 
 ### Hugging Face Spaces Deployment
 

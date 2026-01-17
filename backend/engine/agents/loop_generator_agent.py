@@ -53,7 +53,7 @@ class LoopGeneratorAgent(BaseAgent):
         self.min_loop_bars = self.get_config_value("min_loop_bars", 4)
         self.max_loop_bars = self.get_config_value("max_loop_bars", 8)
         self.oneshot_threshold = self.get_config_value("oneshot_threshold", 0.3)
-        self.generate_midi = self.get_config_value("generate_midi", True)
+        self.enable_midi_generation = self.get_config_value("generate_midi", True)
         self.min_note_length = self.get_config_value("min_note_length", 0.1)
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -110,7 +110,7 @@ class LoopGeneratorAgent(BaseAgent):
             
             # Generate MIDI from melodic stems
             midi_files = []
-            if self.generate_midi:
+            if self.enable_midi_generation:
                 self.log_info("Generating MIDI from melodic stems...")
                 melodic_stems = ["bass", "other", "guitar", "piano"]
                 for stem_name in melodic_stems:

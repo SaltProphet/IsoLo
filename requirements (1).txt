@@ -5,3 +5,10 @@ librosa
 gradio==4.36.1
 huggingface_hub
 matplotlib
+# SAM Audio dependencies (optional - install one of these)
+# Option 1: Lightweight inference wrapper (recommended for most users)
+# sam-audio-infer
+# Option 2: Official package (requires more setup and authentication)
+# Install from: https://github.com/facebookresearch/sam-audio
+torch>=2.0.0
+torchaudio>=2.0.0

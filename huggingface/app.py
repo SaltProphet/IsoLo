@@ -1,9 +1,17 @@
+import sys
+import os
+
+# Ensure the script's directory is in Python path for module imports
+# This is critical for containerized environments (e.g., Hugging Face Spaces)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+if script_dir not in sys.path:
+    sys.path.insert(0, script_dir)
+
 import gradio as gr
 import numpy as np
 import librosa
 import librosa.display
 import soundfile as sf
-import os
 import tempfile
 import zipfile
 import time

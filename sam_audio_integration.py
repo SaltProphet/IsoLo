@@ -93,8 +93,12 @@ class SAMAudioSeparator:
             # If both fail, raise an error with instructions
             raise ImportError(
                 "SAM Audio is not installed. Please install one of:\n"
-                "1. Lightweight version: pip install sam-audio-infer\n"
-                "2. Official version: git clone https://github.com/facebookresearch/sam-audio && cd sam-audio && pip install .\n"
+                "1. Lightweight version:\n"
+                "   pip install sam-audio-infer\n"
+                "2. Official version:\n"
+                "   git clone https://github.com/facebookresearch/sam-audio\n"
+                "   cd sam-audio\n"
+                "   pip install .\n"
                 "\nNote: Official version requires GPU and Hugging Face authentication."
             )
             
@@ -114,7 +118,7 @@ class SAMAudioSeparator:
         Args:
             audio_path: Path to the input audio file
             description: Natural language description of what to isolate
-                        Examples: "singing voice", "guitar solo", "dog barking",
+                        Examples: "lead vocals", "guitar solo", "dog barking",
                                 "piano melody", "crowd cheering", "rain sounds"
             output_path: Optional path to save the isolated audio
             
@@ -123,7 +127,7 @@ class SAMAudioSeparator:
             
         Examples:
             >>> separator = SAMAudioSeparator()
-            >>> sr, isolated = separator.separate_by_description("song.wav", "lead guitar")
+            >>> sr, isolated = separator.separate_by_description("song.wav", "guitar solo")
         """
         # Initialize model on first use
         self._initialize_model()

@@ -505,23 +505,50 @@ def separate_stems(audio_file_path: str) -> Tuple[
     Returns Gradio Audio tuples (sr, data) for each stem.
     
     This is the original function maintained for backward compatibility.
+    For direct performance, it uses inline implementation rather than delegation.
     """
-    stems_dict, bpm, key, recs = separate_stems_with_sam_audio(
-        audio_file_path, 
-        use_sam_audio=False,
-        sam_prompts=None
-    )
-    
-    # Extract traditional stems in expected order
-    return (
-        stems_dict.get("vocals"), 
-        stems_dict.get("drums"), 
-        stems_dict.get("bass"), 
-        stems_dict.get("other"),
-        stems_dict.get("guitar"), 
-        stems_dict.get("piano"), 
-        bpm, key, recs
-    )
+    if audio_file_path is None:
+        raise gr.Error("No audio file uploaded!")
+
+    try:
+        # Load audio
+        y_orig, sr_orig = librosa.load(audio_file_path, sr=None, mono=False)
+        
+        # Ensure stereo for processing
+        if y_orig.ndim == 1:
+            y_orig = np.stack([y_orig, y_orig], axis=-1)
+        if y_orig.ndim == 2 and y_orig.shape[0] < y_orig.shape[1]:
+            y_orig = y_orig.T  # Transpose to (N, 2)
+            
+        y_mono = librosa.to_mono(y_orig)
+
+        # Detect tempo and key
+        tempo, _ = librosa.beat.beat_track(y=y_mono, sr=sr_orig)
+        detected_bpm = 120.0 if tempo is None or tempo.size == 0 or tempo[0] == 0 else float(np.round(tempo[0]))
+        detected_key = detect_key(y_mono, sr_orig)
+        harmonic_recs = get_harmonic_recommendations(detected_key)
+
+        # Create mock separated stems
+        # In a real app, you'd use Demucs, Spleeter, etc.
+        stems_data: Dict[str, Optional[Tuple[int, np.ndarray]]] = {}
+        
+        # Convert to int16 for Gradio Audio component
+        y_int16 = (y_orig * 32767).astype(np.int16)
+
+        for name in STEM_NAMES:
+            # We give each stem the full audio for this demo
+            stems_data[name] = (sr_orig, y_int16.copy())
+
+        return (
+            stems_data["vocals"], stems_data["drums"], stems_data["bass"], stems_data["other"],
+            stems_data["guitar"], stems_data["piano"], 
+            detected_bpm, detected_key, harmonic_recs
+        )
+    except Exception as e:
+        print(f"Error processing audio: {e}")
+        import traceback
+        traceback.print_exc()
+        raise gr.Error(f"Error processing audio: {str(e)}")
 
 def generate_waveform_preview(y: np.ndarray, sr: int, stem_name: str, temp_dir: str) -> str:
     """Generates a Matplotlib image showing the waveform."""

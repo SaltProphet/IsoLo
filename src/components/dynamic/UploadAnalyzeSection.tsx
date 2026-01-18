@@ -65,7 +65,7 @@ export function UploadAnalyzeSection(props: UploadAnalyzeSectionProps): React.JS
         />
         <button
           onClick={handleUploadClick}
-          className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-3 bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 hover:from-isolo-orange-500 hover:to-isolo-red-500 text-white rounded-lg font-medium transition-all duration-200 shadow-isolo hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isProcessing}
         >
           {selectedFileName ? `Selected: ${selectedFileName}` : '📁 Choose Audio File'}
@@ -84,8 +84,8 @@ export function UploadAnalyzeSection(props: UploadAnalyzeSectionProps): React.JS
             }}
             className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
               separationMode === 'traditional'
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
+                ? 'bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 text-white shadow-isolo'
+                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-isolo-orange-600/20'
             }`}
             disabled={isProcessing}
           >
@@ -97,8 +97,8 @@ export function UploadAnalyzeSection(props: UploadAnalyzeSectionProps): React.JS
             }}
             className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
               separationMode === 'sam-audio'
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
+                ? 'bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 text-white shadow-isolo'
+                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-isolo-orange-600/20'
             }`}
             disabled={isProcessing}
           >
@@ -116,7 +116,7 @@ export function UploadAnalyzeSection(props: UploadAnalyzeSectionProps): React.JS
       <button
         onClick={onAnalyze}
         disabled={!selectedFileName || isProcessing}
-        className="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-600 disabled:to-gray-700"
+        className="w-full px-6 py-4 bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 hover:from-isolo-orange-500 hover:to-isolo-red-500 text-white rounded-lg font-semibold text-lg transition-all duration-200 shadow-isolo hover:shadow-2xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:from-gray-700 disabled:to-gray-800 disabled:hover:scale-100"
       >
         {isProcessing ? '⏳ Processing...' : '🎵 Separate Stems & Analyze'}
       </button>

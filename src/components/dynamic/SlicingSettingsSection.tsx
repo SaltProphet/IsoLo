@@ -59,8 +59,8 @@ export function SlicingSettingsSection(props: SlicingSettingsSectionProps): Reac
               onClick={() => onLoopTypeChange?.(type)}
               className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
                 loopType === type
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
+                  ? 'bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 text-white shadow-isolo'
+                  : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-isolo-orange-600/20'
               }`}
             >
               {type === 'one-shots' ? 'One-Shots' : type.toUpperCase()}

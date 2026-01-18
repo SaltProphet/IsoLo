@@ -1,6 +1,6 @@
-# FileUploads Specifications
+# IsoLo Specifications
 
-This directory contains the **source of truth** for all features in the Loop Architect application.
+This directory contains the **source of truth** for all features in the IsoLo application.
 
 ## Purpose
 

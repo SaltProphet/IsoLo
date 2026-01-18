@@ -1,9 +1,9 @@
 {
-  "name": "isolo-loop-architect",
+  "name": "isolo",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "AI-Aware React/TypeScript audio processing application with SAM Audio integration",
+  "description": "IsoLo - AI-Aware React/TypeScript audio processing application with SAM Audio integration",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

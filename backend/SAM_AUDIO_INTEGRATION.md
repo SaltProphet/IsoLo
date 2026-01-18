@@ -2,7 +2,7 @@
 
 ## Overview
 
-Loop Architect now integrates **SAM Audio** (Segment Anything Model for Audio) by Meta AI, enabling you to isolate **literally any sound you can name** from your audio files, not just traditional stems like vocals, drums, and bass.
+IsoLo now integrates **SAM Audio** (Segment Anything Model for Audio) by Meta AI, enabling you to isolate **literally any sound you can name** from your audio files, not just traditional stems like vocals, drums, and bass.
 
 ## What is SAM Audio?
 
@@ -191,9 +191,9 @@ results = separator.separate_multiple(
 )
 ```
 
-### Integration with Loop Architect
+### Integration with IsoLo
 
-The SAM Audio integration is built into the Loop Architect tool. You can use it programmatically:
+The SAM Audio integration is built into the IsoLo tool. You can use it programmatically:
 
 ```python
 from app import separate_stems_with_sam_audio, separate_named_sounds
@@ -247,7 +247,7 @@ FileUploads/
 
 ### Integration Points
 
-The SAM Audio functionality is integrated into the existing Loop Architect workflow:
+The SAM Audio functionality is integrated into the existing IsoLo workflow:
 
 - **`separate_stems_with_sam_audio()`**: Enhanced version of stem separation
 - **`separate_named_sounds()`**: New convenience function for named isolation

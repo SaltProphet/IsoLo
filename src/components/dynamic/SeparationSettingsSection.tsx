@@ -134,8 +134,8 @@ export function SeparationSettingsSection(props: SeparationSettingsSectionProps)
             onClick={() => onQualityChange?.('fast')}
             className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
               quality === 'fast'
-                ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
+                ? 'bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 text-white shadow-isolo'
+                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-isolo-orange-600/20'
             }`}
           >
             <div className="text-lg mb-1">⚡</div>
@@ -145,8 +145,8 @@ export function SeparationSettingsSection(props: SeparationSettingsSectionProps)
             onClick={() => onQualityChange?.('balanced')}
             className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
               quality === 'balanced'
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
+                ? 'bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 text-white shadow-isolo'
+                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-isolo-orange-600/20'
             }`}
           >
             <div className="text-lg mb-1">⚖️</div>
@@ -156,8 +156,8 @@ export function SeparationSettingsSection(props: SeparationSettingsSectionProps)
             onClick={() => onQualityChange?.('high')}
             className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
               quality === 'high'
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
+                ? 'bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 text-white shadow-isolo'
+                : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-isolo-orange-600/20'
             }`}
           >
             <div className="text-lg mb-1">✓✓✓</div>

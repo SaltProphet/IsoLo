@@ -1,5 +1,5 @@
 """
-Demo script for Loop Architect workflow.
+Demo script for IsoLo workflow.
 
 This demonstrates the full workflow integration from input to final pack export.
 """
@@ -96,7 +96,7 @@ def demo_workflow(input_file: str, config: WorkflowConfig = None) -> None:
     # Create temp directory
     temp_dir = tempfile.mkdtemp()
     
-    print("🎵 Loop Architect Workflow Demo")
+    print("🎵 IsoLo Workflow Demo")
     print("=" * 50)
     print(f"Input: {os.path.basename(input_file)}")
     print(f"Config: {config.separation_mode} mode, {config.loop_type} loops")
@@ -135,7 +135,7 @@ def demo_workflow(input_file: str, config: WorkflowConfig = None) -> None:
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description='Loop Architect Workflow Demo')
+    parser = argparse.ArgumentParser(description='IsoLo Workflow Demo')
     parser.add_argument('input_file', help='Path to input audio file')
     parser.add_argument('--pack-name', default='Demo_Pack', help='Name for the output pack')
     parser.add_argument('--loop-type', choices=['1-bar', '2-bar', '4-bar', 'one-shots'], 

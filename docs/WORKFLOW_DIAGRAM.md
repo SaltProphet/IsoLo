@@ -1,10 +1,10 @@
-# Loop Architect Workflow Diagram
+# IsoLo Workflow Diagram
 
 ## Complete Workflow Pipeline
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    LOOP ARCHITECT WORKFLOW                       │
+│                       ISOLO WORKFLOW                             │
 │                     Music/Video Pack Generator                   │
 └─────────────────────────────────────────────────────────────────┘
 

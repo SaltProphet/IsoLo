@@ -1,6 +1,6 @@
-# Loop Architect - Backend
+# IsoLo - Backend
 
-This directory contains the Python backend for Loop Architect, which provides audio processing capabilities including stem separation and SAM Audio integration.
+This directory contains the Python backend for IsoLo, which provides audio processing capabilities including stem separation and SAM Audio integration.
 
 ## Files
 

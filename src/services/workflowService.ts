@@ -1,5 +1,5 @@
 /**
- * Workflow Service for Loop Architect
+ * Workflow Service for IsoLo
  * 
  * This service provides TypeScript interfaces for the workflow orchestrator
  * and handles communication with the backend workflow system.
@@ -269,7 +269,7 @@ export class WorkflowService {
       includeLyrics: false,
       includeVisualizer: false,
       includeVideo: false,
-      packName: 'Loop_Architect_Pack',
+      packName: 'IsoLo_Pack',
     };
   }
 }

@@ -1,7 +1,7 @@
 ---
-title: Loop Architect
+title: IsoLo
 emoji: 🎵
-colorFrom: blue
+colorFrom: orange
 colorTo: red
 sdk: gradio
 sdk_version: 4.0.0
@@ -10,9 +10,9 @@ pinned: false
 license: mit
 ---
 
-# 🎵 Loop Architect - AI-Powered Audio Processing
+# 🎵 IsoLo - AI-Powered Audio Processing
 
-Loop Architect is a powerful audio processing tool that combines traditional stem separation with AI-powered named sound isolation. Upload any audio file to separate it into stems, detect musical attributes (BPM, key), and generate perfectly tagged loops ready for your DAW.
+IsoLo is a powerful audio processing tool that combines traditional stem separation with AI-powered named sound isolation. Upload any audio file to separate it into stems, detect musical attributes (BPM, key), and generate perfectly tagged loops ready for your DAW.
 
 ## ✨ Features
 

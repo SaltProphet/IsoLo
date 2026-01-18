@@ -1,5 +1,5 @@
 """
-Workflow Orchestrator for Loop Architect.
+Workflow Orchestrator for IsoLo.
 
 This module coordinates the execution of all workflow steps.
 """

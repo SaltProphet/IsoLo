@@ -1,5 +1,5 @@
 """
-Workflow modules for Loop Architect.
+Workflow modules for IsoLo.
 
 This package contains modular processing components for the audio workflow.
 """

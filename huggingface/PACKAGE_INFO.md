@@ -1,6 +1,6 @@
 # Hugging Face Spaces Deployment Package
 
-This folder contains everything needed to deploy Loop Architect to Hugging Face Spaces.
+This folder contains everything needed to deploy IsoLo to Hugging Face Spaces.
 
 ## 📁 Files Included
 

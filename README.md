@@ -1,10 +1,10 @@
-# IsoLo - Loop Architect
+# IsoLo
 
 An AI-Aware React/TypeScript audio processing application built with **Spec-Driven Development** principles.
 
 ## Overview
 
-Loop Architect is a modern audio processing tool that combines a React frontend with a Python backend to provide powerful stem separation and sound isolation capabilities. The project demonstrates AI-assisted development with clear specifications, strict type safety, and modular architecture.
+IsoLo is a modern audio processing tool that combines a React frontend with a Python backend to provide powerful stem separation and sound isolation capabilities. The project demonstrates AI-assisted development with clear specifications, strict type safety, and modular architecture.
 
 ### Key Features
 
@@ -21,7 +21,7 @@ Loop Architect is a modern audio processing tool that combines a React frontend 
 
 ## Workflow Pipeline
 
-Loop Architect implements a complete 11-step modular workflow:
+IsoLo implements a complete 11-step modular workflow:
 
 1. **Input Handling** - Validate and prepare audio files
 2. **Stem Separation** - Traditional stems or SAM Audio named isolation
@@ -149,7 +149,7 @@ See [docs/specs/workflow-orchestrator-spec.md](./docs/specs/workflow-orchestrato
 
 ### Hugging Face Spaces Deployment
 
-Deploy Loop Architect to Hugging Face Spaces for public access:
+Deploy IsoLo to Hugging Face Spaces for public access:
 
 ```bash
 # All deployment files are in the huggingface/ folder

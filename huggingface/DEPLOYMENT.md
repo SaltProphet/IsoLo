@@ -1,6 +1,6 @@
-# Deploying Loop Architect to Hugging Face Spaces
+# Deploying IsoLo to Hugging Face Spaces
 
-This guide walks you through deploying Loop Architect to Hugging Face Spaces.
+This guide walks you through deploying IsoLo to Hugging Face Spaces.
 
 ## Prerequisites
 
@@ -67,7 +67,7 @@ This guide walks you through deploying Loop Architect to Hugging Face Spaces.
 
 ### Hardware Settings
 
-Loop Architect can run on different hardware tiers:
+IsoLo can run on different hardware tiers:
 
 1. **CPU Basic (Free)** - ✅ Recommended for demo
    - Works for basic audio processing

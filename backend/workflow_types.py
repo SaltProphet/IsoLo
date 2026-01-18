@@ -1,5 +1,5 @@
 """
-Core workflow types and data structures for Loop Architect.
+Core workflow types and data structures for IsoLo.
 
 This module defines the shared types used across all workflow modules.
 """

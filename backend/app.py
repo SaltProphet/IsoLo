@@ -1043,8 +1043,8 @@ def execute_full_workflow(
 
 # --- GRADIO INTERFACE ---
 
-with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue", secondary_hue="red")) as demo:
-    gr.Markdown("# 🎵 Loop Architect (Pro Edition)")
+with gr.Blocks(theme=gr.themes.Soft(primary_hue="orange", secondary_hue="red")) as demo:
+    gr.Markdown("# 🎵 IsoLo")
     gr.Markdown("Upload any song to separate it into stems, detect musical attributes, and then slice and tag the stems for instant use in a DAW.")
 
     # State variables

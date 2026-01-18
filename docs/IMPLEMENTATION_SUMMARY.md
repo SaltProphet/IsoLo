@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document summarizes the complete implementation of the modular workflow orchestrator for the Loop Architect music/video sample pack generator.
+This document summarizes the complete implementation of the modular workflow orchestrator for the IsoLo music/video sample pack generator.
 
 ## Implementation Date
 

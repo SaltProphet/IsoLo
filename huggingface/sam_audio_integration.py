@@ -258,7 +258,7 @@ def create_named_stem_separations(
     """
     High-level function to separate named sounds from an audio file.
     
-    This is the main entry point for SAM Audio integration into the Loop Architect tool.
+    This is the main entry point for SAM Audio integration into the IsoLo tool.
     
     Args:
         audio_file_path: Path to the audio file to process

@@ -1,17 +1,9 @@
-import sys
-import os
-
-# Ensure the script's directory is in Python path for module imports
-# This is critical for containerized environments (e.g., Hugging Face Spaces)
-script_dir = os.path.dirname(os.path.abspath(__file__))
-if script_dir not in sys.path:
-    sys.path.insert(0, script_dir)
-
 import gradio as gr
 import numpy as np
 import librosa
 import librosa.display
 import soundfile as sf
+import os
 import tempfile
 import zipfile
 import time
@@ -901,154 +893,6 @@ def separate_named_sounds(
     return stems_dict, bpm, key, recs
 
 
-# --- WORKFLOW INTEGRATION ---
-
-from workflow_orchestrator import WorkflowOrchestrator
-from workflow_types import WorkflowConfig, WorkflowContext
-from modules import (
-    InputHandler, AudioAnalyzer, InstrumentalBuilder, Slicer,
-    LyricExtractor, Visualizer, VideoComposer, MetadataTagger,
-    PackBuilder, Exporter
-)
-
-
-def execute_full_workflow(
-    vocals_audio: Optional[Tuple[int, np.ndarray]],
-    drums_audio: Optional[Tuple[int, np.ndarray]],
-    bass_audio: Optional[Tuple[int, np.ndarray]],
-    other_audio: Optional[Tuple[int, np.ndarray]],
-    guitar_audio: Optional[Tuple[int, np.ndarray]],
-    piano_audio: Optional[Tuple[int, np.ndarray]],
-    input_file: str,
-    detected_bpm: float,
-    detected_key: str,
-    harmonic_recs: str,
-    manual_bpm: float,
-    time_signature: str,
-    loop_type: str,
-    sensitivity: float,
-    crossfade_ms: int,
-    transpose_semitones: int,
-    pan_depth: float,
-    level_depth: float,
-    modulation_rate: str,
-    target_dbfs: float,
-    attack_gain: float,
-    sustain_gain: float,
-    filter_type: str,
-    filter_freq: float,
-    filter_depth: float,
-    pack_name: str = "Loop_Architect_Pack",
-    artist_name: str = "",
-    description: str = "",
-    progress: Optional[gr.Progress] = None
-) -> Optional[str]:
-    """
-    Execute the full workflow using the orchestrator.
-    
-    This integrates all workflow steps into a single coordinated process.
-    """
-    try:
-        # Build stems dict from individual audio outputs
-        stems_dict = {}
-        if vocals_audio: stems_dict['vocals'] = vocals_audio
-        if drums_audio: stems_dict['drums'] = drums_audio
-        if bass_audio: stems_dict['bass'] = bass_audio
-        if other_audio: stems_dict['other'] = other_audio
-        if guitar_audio: stems_dict['guitar'] = guitar_audio
-        if piano_audio: stems_dict['piano'] = piano_audio
-        
-        if not stems_dict:
-            raise gr.Error("No stems available. Please separate stems first!")
-        
-        # Create workflow configuration
-        config = WorkflowConfig(
-            separation_mode='traditional',
-            manual_bpm=manual_bpm,
-            transpose_semitones=transpose_semitones,
-            time_signature=time_signature,
-            loop_type=loop_type.replace(' Bar Loops', '-bar').replace(' ', '-').lower(),
-            one_shot_sensitivity=sensitivity,
-            crossfade_ms=crossfade_ms,
-            normalize_peak=target_dbfs,
-            apply_modulation=pan_depth > 0 or level_depth > 0,
-            modulation_rate=modulation_rate,
-            pan_depth=pan_depth,
-            level_depth=level_depth,
-            filter_type=filter_type,
-            filter_freq=filter_freq,
-            filter_depth=filter_depth,
-            attack_gain=attack_gain,
-            sustain_gain=sustain_gain,
-            include_instrumental=True,
-            include_midi=True,
-            include_lyrics=False,
-            include_visualizer=False,
-            include_video=False,
-            pack_name=pack_name,
-            artist_name=artist_name if artist_name else None,
-            description=description if description else None
-        )
-        
-        # Create temp directory
-        temp_dir = tempfile.mkdtemp()
-        
-        # Create workflow context with stems already separated
-        context = WorkflowContext(
-            input_file=input_file,
-            temp_dir=temp_dir,
-            config=config,
-            stems=stems_dict,
-            bpm=detected_bpm,
-            key=detected_key,
-            harmonic_recs=harmonic_recs,
-            time_signature=time_signature
-        )
-        
-        # Create orchestrator
-        orchestrator = WorkflowOrchestrator(config)
-        
-        # Register modules (skip input handler and analyzer, already done)
-        orchestrator.register_module(InstrumentalBuilder())
-        orchestrator.register_module(Slicer())
-        orchestrator.register_module(LyricExtractor())
-        orchestrator.register_module(Visualizer())
-        orchestrator.register_module(VideoComposer())
-        orchestrator.register_module(MetadataTagger())
-        orchestrator.register_module(PackBuilder())
-        orchestrator.register_module(Exporter())
-        
-        # Set up progress callback
-        if progress:
-            def status_callback(status):
-                progress(
-                    status.progress_percent / 100.0,
-                    desc=f"{status.current_step}: {status.status_message}"
-                )
-            orchestrator.set_status_callback(status_callback)
-        
-        # Execute workflow manually with pre-filled context
-        # Since stems are already separated, we process from instrumental builder onwards
-        for module in orchestrator.modules:
-            result = module.process(context)
-            if not result.success and module.is_required():
-                raise gr.Error(f"Workflow failed at {module.get_name()}: {result.error}")
-        
-        # Get output ZIP
-        if context.pack_structure:
-            zip_path = context.pack_structure.root_dir + '.zip'
-            if os.path.exists(zip_path):
-                return zip_path
-        
-        raise gr.Error("Pack generation failed - no output ZIP created")
-        
-    except Exception as e:
-        print(f"Workflow execution error: {e}")
-        import traceback
-        traceback.print_exc()
-        raise gr.Error(f"Workflow execution failed: {str(e)}")
-
-
 # --- GRADIO INTERFACE ---
 
 with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue", secondary_hue="red")) as demo:
@@ -1111,17 +955,6 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue", secondary_hue="red")) as
 
             gr.Markdown("### 3. Generate Pack")
             slice_all_button = gr.Button("SLICE ALL & GENERATE PACK", variant="primary")
-            
-            gr.Markdown("---")
-            gr.Markdown("**🚀 New: Integrated Workflow**")
-            gr.Markdown("Use the full modular workflow orchestrator (includes all steps)")
-            
-            with gr.Row():
-                workflow_pack_name = gr.Textbox(label="Pack Name", value="Loop_Architect_Pack", max_lines=1)
-            with gr.Row():
-                workflow_artist = gr.Textbox(label="Artist Name (Optional)", value="", max_lines=1)
-            workflow_button = gr.Button("GENERATE PACK (WORKFLOW)", variant="secondary")
-            
             zip_file_output = gr.File(label="Download Your Loop Pack")
 
         with gr.Column(scale=2):
@@ -1188,22 +1021,6 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue", secondary_hue="red")) as
     slice_all_button.click(
         fn=slice_all_and_zip,
         inputs=stem_audio_outputs + all_settings,
-        outputs=[zip_file_output]
-    )
-    
-    # 5. "GENERATE PACK (WORKFLOW)" button click - uses full workflow orchestrator
-    workflow_button.click(
-        fn=execute_full_workflow,
-        inputs=stem_audio_outputs + [
-            audio_input,  # input file
-            detected_bpm_state, detected_key_state, harmonic_recs_state,
-            manual_bpm_input, time_signature,
-            loop_choice, sensitivity, crossfade_ms, transpose_semitones,
-            pan_depth, level_depth, modulation_rate,
-            target_dbfs, attack_gain, sustain_gain,
-            filter_type, filter_freq, filter_depth,
-            workflow_pack_name, workflow_artist, gr.State(value="")  # description
-        ],
         outputs=[zip_file_output]
     )
 

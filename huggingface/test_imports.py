@@ -13,18 +13,22 @@ import subprocess
 def test_import_from_huggingface_dir():
     """Test importing when running from huggingface directory."""
     print("Test 1: Running from huggingface directory...")
+    
+    # Get the script's directory (should be huggingface)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
     result = subprocess.run(
-        ["python3", "-c", """
+        ["python3", "-c", f"""
 import sys
 import os
-script_dir = os.path.dirname(os.path.abspath('app.py'))
+script_dir = '{script_dir}'
 sys.path.insert(0, script_dir)
 from modules import InputHandler
 from workflow_orchestrator import WorkflowOrchestrator
 from workflow_types import WorkflowConfig
 print('SUCCESS')
 """],
-        cwd=os.path.dirname(os.path.abspath(__file__)),
+        cwd=script_dir,
         capture_output=True,
         text=True
     )

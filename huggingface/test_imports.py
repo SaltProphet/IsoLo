@@ -17,17 +17,22 @@ def test_import_from_huggingface_dir():
     # Get the script's directory (should be huggingface)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
-    result = subprocess.run(
-        ["python3", "-c", f"""
+    # Create a test script - use raw string to avoid escaping issues
+    # Note: __file__ won't be defined in -c mode, so we use cwd
+    test_script = """
 import sys
 import os
-script_dir = '{script_dir}'
+# When running with -c, __file__ is not defined, so use current directory
+script_dir = os.getcwd()
 sys.path.insert(0, script_dir)
 from modules import InputHandler
 from workflow_orchestrator import WorkflowOrchestrator
 from workflow_types import WorkflowConfig
 print('SUCCESS')
-"""],
+"""
+    
+    result = subprocess.run(
+        ["python3", "-c", test_script],
         cwd=script_dir,
         capture_output=True,
         text=True
@@ -64,16 +69,21 @@ def test_import_with_absolute_path():
     """Test importing when app.py is referenced by absolute path."""
     print("Test 3: Using absolute path...")
     app_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app.py')
-    result = subprocess.run(
-        ["python3", "-c", f"""
+    app_dir = os.path.dirname(app_path)
+    
+    # Create test script without path injection
+    test_script = f"""
 import sys
 import os
-__file__ = '{app_path}'
-script_dir = os.path.dirname(os.path.abspath(__file__))
+# Simulate __file__ being an absolute path
+script_dir = r'{app_dir}'
 sys.path.insert(0, script_dir)
 from modules import InputHandler
 print('SUCCESS')
-"""],
+"""
+    
+    result = subprocess.run(
+        ["python3", "-c", test_script],
         capture_output=True,
         text=True
     )
@@ -116,7 +126,7 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == '--inline-test':
         return inline_test()
     
-    print("="  * 60)
+    print("="*60)
     print("Module Import Tests for HuggingFace Deployment")
     print("=" * 60)
     print()

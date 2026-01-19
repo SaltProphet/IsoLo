@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-br from-gray-950 via-gray-900 to-black text-gray-100;
+    @apply bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100;
   }
 }
 
@@ -15,17 +15,5 @@
   
   .metal-panel {
     @apply bg-gradient-to-b from-metal-light to-metal-dark border border-white/10 rounded-lg shadow-metal;
-  }
-  
-  .isolo-panel {
-    @apply bg-gradient-to-br from-gray-900/90 to-gray-950/90 backdrop-blur-xl border border-isolo-orange-600/20 rounded-xl shadow-isolo;
-  }
-  
-  .isolo-button {
-    @apply bg-gradient-to-r from-isolo-orange-600 to-isolo-red-600 hover:from-isolo-orange-500 hover:to-isolo-red-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-isolo hover:shadow-lg hover:scale-105;
-  }
-  
-  .isolo-button-secondary {
-    @apply bg-gray-800 hover:bg-gray-700 text-gray-100 border border-isolo-orange-600/30 hover:border-isolo-orange-500 font-semibold py-2 px-4 rounded-lg transition-all duration-200;
   }
 }

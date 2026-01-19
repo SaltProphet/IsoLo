@@ -30,8 +30,8 @@ export interface SectionPanelProps {
 }
 
 /**
- * An IsoLo-themed section panel component for organizing content sections.
- * Features a modern dark theme with orange/red accent gradients.
+ * A glassmorphic section panel component for organizing content sections.
+ * Features a modern glass effect with dark theme and metal accents.
  */
 export function SectionPanel(props: SectionPanelProps): React.JSX.Element {
   const { title, subtitle, children, collapsible = false, defaultCollapsed = false } = props;
@@ -44,7 +44,7 @@ export function SectionPanel(props: SectionPanelProps): React.JSX.Element {
   };
   
   return (
-    <div className="isolo-panel p-6 mb-4 transition-all duration-300 hover:shadow-2xl hover:border-isolo-orange-500/30">
+    <div className="glass-panel p-6 mb-4 transition-all duration-300 hover:shadow-xl">
       <div 
         className={`flex justify-between items-center ${collapsible ? 'cursor-pointer' : ''}`}
         onClick={handleToggle}
@@ -59,7 +59,7 @@ export function SectionPanel(props: SectionPanelProps): React.JSX.Element {
         } : undefined}
       >
         <div>
-          <h2 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-isolo-orange-400 to-isolo-red-500 mb-1">
+          <h2 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-1">
             {title}
           </h2>
           {subtitle && (
@@ -68,7 +68,7 @@ export function SectionPanel(props: SectionPanelProps): React.JSX.Element {
         </div>
         
         {collapsible && (
-          <div className="text-isolo-orange-400 transition-transform duration-200" style={{ transform: isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>
+          <div className="text-gray-400 transition-transform duration-200" style={{ transform: isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)' }}>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>

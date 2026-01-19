@@ -105,11 +105,11 @@ function App(): React.JSX.Element {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <header className="text-center mb-8">
-          <h1 className="text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-orange-600">
-            🎵 IsoLo
+          <h1 className="text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+            🎵 Loop Architect
           </h1>
           <p className="text-xl text-gray-400 font-light">
-            AI-Powered Audio Processing
+            Pro Edition
           </p>
         </header>
         
@@ -226,7 +226,7 @@ function App(): React.JSX.Element {
         
         {/* Footer */}
         <footer className="text-center mt-12 text-gray-500 text-sm">
-          <p>IsoLo • Powered by SAM Audio</p>
+          <p>Loop Architect Pro Edition • Powered by SAM Audio</p>
         </footer>
       </div>
     </div>
